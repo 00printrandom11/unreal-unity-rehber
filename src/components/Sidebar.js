@@ -21,6 +21,9 @@ export class Sidebar {
                     <button class="nav-btn" data-tab="search">
                         <span>🔍</span> Blueprint Ara
                     </button>
+                    <button class="nav-btn" data-tab="guide">
+                        <span>📖</span> Rehber
+                    </button>
                     <button class="nav-btn" data-tab="shortcuts">
                         <span>⌨️</span> Kısayollar
                     </button>
@@ -35,11 +38,9 @@ export class Sidebar {
         const buttons = this.container.querySelectorAll('.nav-btn');
         buttons.forEach(btn => {
             btn.addEventListener('click', () => {
-                // Update active state
                 buttons.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
 
-                // Trigger navigation
                 const tab = btn.dataset.tab;
                 this.onNavigate(tab);
             });
