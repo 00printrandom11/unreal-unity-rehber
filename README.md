@@ -1,59 +1,111 @@
-# 📘 Unreal Engine Rehberi
+# Unreal Engine Rehberi
 
-Unreal Engine geliştiricileri için hazırlanmış, **Actor** türleri, **Değişkenler**, **Blueprint Node'ları** ve **Kısayollar** hakkında detaylı bilgiler içeren interaktif web rehberi.
+Unreal Engine 5 icin kapsamli Turkce rehber uygulamasi. Blueprint sema diyagramlari, adim adim rehberler, degisken/node referanslari ve kisayollar tek bir arayuzde.
 
-Bu proje, Unreal Engine öğrenme sürecini hızlandırmak ve sık kullanılan kavramlara hızlıca erişim sağlamak amacıyla geliştirilmiştir.
+![Vite](https://img.shields.io/badge/Vite-6.0-646CFF?logo=vite&logoColor=white)
+![Vanilla JS](https://img.shields.io/badge/Vanilla-JS-F7DF1E?logo=javascript&logoColor=black)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-## 🚀 Özellikler
+## Ozellikler
 
-*   **🎭 Actor Sınıfları:** AActor, Pawn, Character, Controller ve daha fazlası hakkında detaylı açıklamalar ve kullanım senaryoları.
-*   **📦 Değişken Tipleri:** Boolean, Integer, Float, Vector, Rotator gibi veri tiplerinin renk kodlu anlatımları.
-*   **🔗 Blueprint Node'ları:** Event'ler, Flow Control, Matematik işlemleri ve daha fazlası için kategorize edilmiş node kütüphanesi.
-*   **⌨️ Kısayollar:** Editör içi verimliliği artıran hayati kısayollar.
-*   **⚡ Hızlı ve Hafif:** Vite ve Vanilla JavaScript ile geliştirilmiştir, anında yüklenir.
+- **152 Rehber** - Baslangic, orta ve ileri seviye (70 kategori)
+- **Blueprint Sema Diyagramlari** - Renkli ASCII akis diyagramlari ile node baglantilari
+- **Arama & Filtreleme** - Rehberler arasinda anlik arama, zorluk seviyesine gore filtreleme
+- **Actor Hiyerarsisi** - AActor, APawn, ACharacter, AController agac yapisi
+- **Degisken Referansi** - Boolean, Integer, Float, Vector, String, Enum tipleri
+- **Node Katalogu** - 200+ Blueprint node aciklamasi
+- **Kisayollar** - Unreal Editor klavye kisayollari
 
-## 🛠️ Kurulum ve Çalıştırma
+## Icerik Dagilimi
 
-Projeyi bilgisayarınızda çalıştırmak için aşağıdaki adımları izleyebilirsiniz.
+| Seviye | Rehber Sayisi |
+|--------|--------------|
+| Baslangic | 68 |
+| Orta | 55 |
+| Ileri | 29 |
+| **Toplam** | **152** |
+
+### Kapsanan Konular
+
+- Karakter hareketi, zipma, yuzme, tirmanma
+- Silah sistemleri (mermi, yakin dovus, uzak menzil)
+- AI sistemi (Behavior Tree, Perception, Patrol)
+- UI/HUD (widget, saglik bari, minimap, menu)
+- Envanter, crafting, ticaret, quest sistemi
+- Save/Load, checkpoint, XP/Level sistemi
+- Niagara partikul, ses, muzik sistemi
+- Multiplayer temelleri ve ileri replikasyon
+- Materyal, aydinlatma, post-process
+- Gameplay Ability System (GAS)
+- C++ - Blueprint entegrasyonu
+- World Partition, Level Streaming
+- Nanite/Lumen optimizasyonu
+- Procedural Mesh, Shader, Custom Plugin
+
+## Kurulum
 
 ### Gereksinimler
-*   [Node.js](https://nodejs.org/) (Bilgisayarınızda yüklü olmalıdır)
 
-### 1. Kolay Başlatma (Windows)
-Proje klasörü içerisindeki **`start_server.bat`** dosyasına çift tıklayın.
-Bu dosya otomatik olarak:
-1.  Gerekli paketleri yükler.
-2.  Rastgele bir port oluşturur.
-3.  Tarayıcınızı açıp rehberi başlatır.
+- [Node.js](https://nodejs.org/) (v18+)
 
-### 2. Manuel Başlatma (Terminal)
-Eğer terminal kullanmayı tercih ederseniz:
+### Adimlar
 
 ```bash
-# Bağımlılıkları yükle
+git clone https://github.com/KULLANICI_ADI/unreal-rehber.git
+cd unreal-rehber
 npm install
-
-# Sunucuyu başlat
 npm run dev
 ```
 
-## 📂 Proje Yapısı
+Tarayicida `http://localhost:5173` adresine gidin.
 
-*   `src/data.js`: Tüm rehber içeriğinin (yazılar, açıklamalar) bulunduğu veri dosyası.
-*   `src/components/`: Sidebar ve İçerik alanı gibi arayüz bileşenleri.
-*   `src/main.js`: Uygulamanın giriş noktası.
-*   `index.html`: Ana HTML şablonu.
+### Hizli Baslatma (Windows)
 
-## 🤝 Katkıda Bulunma
+`start_server.bat` dosyasina cift tiklayin. Otomatik olarak bagimliliklari yukler, sunucuyu baslatir ve tarayiciyi acar.
 
-Eğer rehbere yeni bir bilgi eklemek veya düzeltme yapmak isterseniz:
-1.  Bu repoyu Fork'layın.
-2.  Yeni bir Branch oluşturun (`git checkout -b yeni-ozellik`).
-3.  Değişikliklerinizi yapın (Genellikle `src/data.js` dosyasında).
-4.  Commit'leyin (`git commit -m 'Yeni node eklendi'`).
-5.  Push'layın (`git push origin yeni-ozellik`).
-6.  Bir Pull Request oluşturun.
+### Production Build
 
-## 📝 Lisans
+```bash
+npm run build
+npm run preview
+```
 
-Bu proje MIT lisansı altında sunulmaktadır. İstediğiniz gibi kullanabilir ve değiştirebilirsiniz.
+## Proje Yapisi
+
+```
+unreal-rehber/
+├── index.html
+├── package.json
+├── vite.config.js
+├── start_server.bat
+├── src/
+│   ├── main.js              # Uygulama giris noktasi
+│   ├── style.css             # Tum stiller
+│   ├── data.js               # Actor, degisken, node, kisayol verileri
+│   ├── guideData.js          # 152 rehber + blueprint semalari (~1.2 MB)
+│   └── components/
+│       ├── Sidebar.js        # Sol navigasyon paneli
+│       └── ContentArea.js    # Icerik render motoru
+```
+
+## Teknoloji
+
+- **Vite** - Gelistirme sunucusu ve build araci
+- **Vanilla JavaScript** - ES Modules, framework yok
+- **CSS** - Custom properties, flexbox, grid
+
+## Ekran Goruntuleri
+
+Uygulama koyu tema ile gelir. Sol panelden sekme secin, rehber sekmesinde arama kutusunu kullanarak istediginiz konuyu bulun.
+
+## Katkida Bulunma
+
+1. Fork edin
+2. Feature branch olusturun (`git checkout -b yeni-ozellik`)
+3. Degisikliklerinizi commit edin (`git commit -m "Yeni rehber eklendi"`)
+4. Push edin (`git push origin yeni-ozellik`)
+5. Pull Request acin
+
+## Lisans
+
+MIT
