@@ -2,7 +2,27 @@ export const actorData = [
     {
         id: 'AActor',
         name: 'AActor (Actor)',
+        color: '#4a9eff',
+        icon: '🎭',
+        badge: 'Base Class',
         description: 'Unreal Engine dünyasının "Atom" parçacığıdır. Kısaca: "Dünyada yeri olan her şey" bir aktördür.\n\n🤔 NEDİR BU?\nEğer bir şeyi mouse ile tutup seviyeye (Level) sürükleyebiliyorsanız, o %100 bir Actor\'dür. Konumu (Location), Dönüşü (Rotation) ve Boyutu (Scale) vardır. Tek başına pek bir şey yapmaz, içine "Component" (Parça) ekleyerek ona özellik kazandırırsınız.\n\n💡 NE ZAMAN KULLANMALIYIM?\nSahneye koyacağınız şeyin özel bir hareket yeteneğine (yürümesine) veya bir beyne (yapay zeka) ihtiyacı YOKSA, sadece duracaksa veya basit bir mantık çalıştıracaksa AActor kullanın. En temel ve en hafif sınıftır.',
+        properties: [
+            { name: 'ActorLocation', type: 'FVector', desc: 'Aktörün dünya konumu' },
+            { name: 'ActorRotation', type: 'FRotator', desc: 'Aktörün yönü' },
+            { name: 'ActorScale3D', type: 'FVector', desc: 'Aktörün ölçek faktörü' },
+            { name: 'Tags', type: 'TArray<FName>', desc: 'Etiket listesi (arama ve filtreleme)' }
+        ],
+        events: [
+            { name: 'BeginPlay', desc: 'Oyun başladığında çalışır' },
+            { name: 'EndPlay', desc: 'Aktör yok edildiğinde çalışır' },
+            { name: 'Tick', desc: 'Her karede güncellenir' }
+        ],
+        methods: [
+            { name: 'SetActorLocation', desc: 'Aktörü belirtilen konuma taşır' },
+            { name: 'SetActorRotation', desc: 'Aktörün yönünü ayarlar' },
+            { name: 'DestroyActor', desc: 'Aktörü yok eder' }
+        ],
+        blueprintNotes: 'Blueprint tip: Herhangi bir Blueprint Actor. Content Browser > sağ tık > Blueprint Class > Actor seçin.',
         examples: [
             '🔫 Yerde duran ve alınabilen bir Silah (Weapon Class)',
             '🚪 Açılıp kapanabilen interaktif bir Kapı (Door Blueprint)',
@@ -14,7 +34,24 @@ export const actorData = [
             {
                 id: 'APawn',
                 name: 'APawn (Pawn)',
+                color: '#4CAF50',
+                icon: '♟️',
+                badge: 'Pawn',
                 description: 'Actor\'ün "Ele Geçirilebilir" (Possess) versiyonudur. Yani içine bir ruh (Controller) girebilen bir bedendir.\n\n🤔 NEDİR BU?\nPawn, satrançtaki piyon gibidir. Kendi başına dururken sadece bir eşyadır, ama bir oyuncu (Player) veya bilgisayar (AI) onu kontrol etmeye başladığında canlanır. Hareket etme yeteneği kazanabilir.\n\n💡 NE ZAMAN KULLANMALIYIM?\nEğer oyuncunun veya yapay zekanın yöneteceği bir "Varlık" yapıyorsanız Pawn seçin. Ama dikkat: Pawn "Yürümek" zorunda değildir. Uçabilir, yüzebilir veya sadece dönebilir. Eğer "İnsan gibi yürüsün" istiyorsanız Character sınıfına bakın.',
+                properties: [
+                    { name: 'Controller', type: 'AController', desc: 'Bu pawn\'ı kontrol eden controller' },
+                    { name: 'PawnViewLocation', type: 'FVector', desc: 'Kamera bakış noktası' },
+                    { name: 'BaseEyeHeight', type: 'float', desc: 'Göz yüksekliği' }
+                ],
+                events: [
+                    { name: 'PossessedBy', desc: 'Bir controller bu pawn\'ı ele geçirdiğinde' },
+                    { name: 'UnPossessed', desc: 'Controller pawn\'ı bıraktığında' }
+                ],
+                methods: [
+                    { name: 'GetController', desc: 'Bağlı controller\'ı döndürür' },
+                    { name: 'AddMovementInput', desc: 'Hareket girişi ekler' }
+                ],
+                blueprintNotes: 'Blueprint Class > Pawn seçerek oyuncu veya AI tarafından kontrol edilebilir varlık oluşturun.',
                 examples: [
                     '🚗 Sürülebilir bir Yarış Arabası (Araç Fiziği)',
                     '✈️ Uçabilen bir Savaş Uçağı (6 Eksenli Hareket)',
@@ -26,7 +63,25 @@ export const actorData = [
                     {
                         id: 'ACharacter',
                         name: 'ACharacter (Character)',
+                        color: '#4CAF50',
+                        icon: '🧍',
+                        badge: 'Character',
                         description: 'Pawn sınıfının "İki Ayaklılar" (Bipedal) için özelleşmiş halidir. En çok kullanacağınız sınıftır.\n\n🤔 NEDİR BU?\nPawn\'ın üzerine "CharacterMovementComponent" takılmış halidir. Bu bileşen mucize gibidir; tek tıkla yerçekimi, zıplama, yürüme, yüzme, merdiven çıkma ve hatta internet üzerinden (Multiplayer) gecikmesiz hareket etme sorunlarını çözer.\n\n💡 NE ZAMAN KULLANMALIYIM?\nOyununuzdaki canlı, insan benzeri, yürüyen ve koşan her şey için bunu kullanın. Hatta canavarlar ve robotlar için bile, eğer yerde yürüyorsa Character sınıfı en güvenli limandır.',
+                        properties: [
+                            { name: 'CharacterMovement', type: 'UCharacterMovementComponent', desc: 'Yürüme, zıplama, yüzme bileşeni' },
+                            { name: 'Mesh', type: 'USkeletalMeshComponent', desc: 'Karakter modeli (iskelet)' },
+                            { name: 'CapsuleComponent', type: 'UCapsuleComponent', desc: 'Çarpışma kapsülü' }
+                        ],
+                        events: [
+                            { name: 'Landed', desc: 'Yere indiğinde çalışır' },
+                            { name: 'Jump', desc: 'Zıplama tetiklendiğinde' }
+                        ],
+                        methods: [
+                            { name: 'Jump', desc: 'Karakteri zıplatır' },
+                            { name: 'LaunchCharacter', desc: 'Karakteri vektör yönünde fırlatır' },
+                            { name: 'GetCharacterMovement', desc: 'Hareket bileşenine erişir' }
+                        ],
+                        blueprintNotes: 'Blueprint Class > Character. Üçüncü veya birinci şahıs şablonları bu sınıftan türetilir.',
                         examples: [
                             '🔫 FPS/TPS oyunundaki ana Karakter (Hero)',
                             '🧟 Üzerinize koşan bir Zombi veya Canavar',
@@ -34,12 +89,83 @@ export const actorData = [
                             '🪖 Siper alıp ateş eden Düşman Askeri',
                             '🧙‍♂️ Büyü yapan Bölüm Sonu Canavarı (Boss)'
                         ],
-                        children: []
+                        children: [
+                            {
+                                id: 'BP_ThirdPersonCharacter',
+                                name: 'BP_ThirdPersonCharacter',
+                                color: '#FF9800',
+                                icon: '🏃',
+                                badge: 'Blueprint Template',
+                                description: 'Üçüncü şahıs (TPS) oyunlar için hazır Blueprint şablonu. Kamera karakterin arkasında takip eder.',
+                                properties: [
+                                    { name: 'SpringArm', type: 'USpringArmComponent', desc: 'Kamera mesafesi ve çarpışma' },
+                                    { name: 'FollowCamera', type: 'UCameraComponent', desc: 'Takip kamerası' }
+                                ],
+                                events: [
+                                    { name: 'BeginPlay', desc: 'Oyun başında' },
+                                    { name: 'Tick', desc: 'Her kare' }
+                                ],
+                                methods: [
+                                    { name: 'AddMovementInput', desc: 'Yürüme girişi' },
+                                    { name: 'Jump', desc: 'Zıplama' }
+                                ],
+                                blueprintNotes: 'Third Person template ile yeni proje açın veya Content > ThirdPersonBP > Blueprints > ThirdPersonCharacter kullanın.',
+                                examples: [
+                                    'Üçüncü şahıs aksiyon oyunu',
+                                    'Açık dünya karakteri',
+                                    'Koşucu / parkur oyunu'
+                                ],
+                                children: []
+                            },
+                            {
+                                id: 'BP_FirstPersonCharacter',
+                                name: 'BP_FirstPersonCharacter',
+                                color: '#FF9800',
+                                icon: '🔫',
+                                badge: 'Blueprint Template',
+                                description: 'Birinci şahıs (FPS) oyunlar için hazır Blueprint şablonu. Kamera karakterin gözünde sabittir.',
+                                properties: [
+                                    { name: 'FirstPersonCamera', type: 'UCameraComponent', desc: 'Birinci şahıs kamera' },
+                                    { name: 'ArmsMesh', type: 'USkeletalMeshComponent', desc: 'Eller ve silah mesh\'i' }
+                                ],
+                                events: [
+                                    { name: 'BeginPlay', desc: 'Oyun başında' },
+                                    { name: 'Tick', desc: 'Her kare' }
+                                ],
+                                methods: [
+                                    { name: 'AddMovementInput', desc: 'Yürüme girişi' },
+                                    { name: 'Jump', desc: 'Zıplama' }
+                                ],
+                                blueprintNotes: 'First Person template ile yeni proje açın veya Content > FirstPersonBP > Blueprints > FirstPersonCharacter kullanın.',
+                                examples: [
+                                    'FPS nişancı oyunu',
+                                    'Bulmaca / keşif oyunu',
+                                    'Simülasyon oyunu'
+                                ],
+                                children: []
+                            }
+                        ]
                     },
                     {
                         id: 'ADefaultPawn',
                         name: 'ADefaultPawn',
+                        color: '#4CAF50',
+                        icon: '⭕',
+                        badge: 'Pawn',
                         description: 'Basit, yerçekimsiz uçuş moduna sahip, çarpışma özelliği olan yuvarlak bir toptur.\n\n🤔 NEDİR BU?\nGenellikle oyun geliştirirken "Hızlıca bir karakter koyayım da etrafta uçarak gezineyim" dediğimizde kullandığımız hazır şablondur. "Ghost" modunda geziyormuşsunuz gibi hissettirir.\n\n💡 NE ZAMAN KULLANMALIYIM?\nGenellikle oyunun son halinde (Shipping) kullanılmaz. RTS (Strateji) oyunlarında kamerayı haritada gezdirmek için veya test aşamasında basit bir avatar olarak kullanabilirsiniz.',
+                        properties: [
+                            { name: 'MoveSpeed', type: 'float', desc: 'Uçuş hızı' },
+                            { name: 'CollisionComponent', type: 'USphereComponent', desc: 'Küre çarpışması' }
+                        ],
+                        events: [
+                            { name: 'BeginPlay', desc: 'Oyun başında' },
+                            { name: 'Tick', desc: 'Her kare' }
+                        ],
+                        methods: [
+                            { name: 'AddMovementInput', desc: 'Uçuş yönü verir' },
+                            { name: 'GetMovementComponent', desc: 'Hareket bileşenini döndürür' }
+                        ],
+                        blueprintNotes: 'Blueprint Class > Default Pawn. Hızlı test ve RTS kamera için.',
                         examples: [
                             '🎥 Maçı izleyen Spectator (İzleyici) Kamerası',
                             '🛠️ Debug modunda haritada hızlıca gezinme aracı',
@@ -52,7 +178,23 @@ export const actorData = [
                     {
                         id: 'ASpectatorPawn',
                         name: 'ASpectatorPawn',
+                        color: '#4CAF50',
+                        icon: '👻',
+                        badge: 'Pawn',
                         description: 'Fiziksel bir bedeni, çarpışması (Collision) olmayan, sadece dünyayı izlemek için tasarlanmış saf kameradır.\n\n🤔 NEDİR BU?\nRuh gibidir. Duvarların içinden geçer, yerçekiminden etkilenmez. Sadece "Bakmak" içindir.\n\n💡 NE ZAMAN KULLANMALIYIM?\nOyuncunuz öldüğünde haritayı özgürce gezmesini istiyorsanız veya bir maç kaydını (Replay) izletirken kamerayı serbest bırakacaksanız bunu kullanın.',
+                        properties: [
+                            { name: 'bCollideWhenPlacing', type: 'bool', desc: 'Yerleştirirken çarpışma' },
+                            { name: 'CameraComponent', type: 'UCameraComponent', desc: 'Görüntü kamerası' }
+                        ],
+                        events: [
+                            { name: 'BeginPlay', desc: 'Oyun başında' },
+                            { name: 'Tick', desc: 'Her kare' }
+                        ],
+                        methods: [
+                            { name: 'AddMovementInput', desc: 'Serbest kamera hareketi' },
+                            { name: 'GetViewTarget', desc: 'Bakılan hedefi döndürür' }
+                        ],
+                        blueprintNotes: 'Ölüm sonrası veya replay izleme için PlayerController\'a atanır.',
                         examples: [
                             '💀 Öldükten sonra takım arkadaşlarını izlediğin kamera',
                             '📹 Replay (Tekrar Oynatma) sistemindeki serbest kamera',
@@ -67,7 +209,24 @@ export const actorData = [
             {
                 id: 'AController',
                 name: 'AController',
+                color: '#9C27B0',
+                icon: '🧠',
+                badge: 'Controller Base',
                 description: 'Aktörlerin "Görünmez Beyni"dir. Pawn\'ı bir "Kukla" olarak düşünürsek, Controller o kuklayı oynatan "İpler" veya "Eldir".\n\n🤔 NEDİR BU?\nController fiziksel bir varlık değildir. Render edilmez, çarpışması yoktur. Sadece "Karar verme" yeteneği vardır. Bir Pawn öldüğünde (Destroy), Controller hayatta kalabilir. Bu sayede oyuncunun skoru, ismi veya takım bilgisi karakter ölünce silinmez.\n\n💡 NE ZAMAN KULLANMALIYIM?\nAktörünüze "Akıl" koymak istediğiniz her an. Eğer bir insan yönetiyorsa PlayerController, bilgisayar yönetiyorsa AIController. Asla ama asla oyun mantığını Pawn\'ın içine gömmeyin, Controller\'da tutun.',
+                properties: [
+                    { name: 'Pawn', type: 'APawn', desc: 'Kontrol edilen pawn' },
+                    { name: 'ControlRotation', type: 'FRotator', desc: 'Controller\'ın baktığı yön' }
+                ],
+                events: [
+                    { name: 'OnPossess', desc: 'Pawn ele geçirildiğinde' },
+                    { name: 'OnUnPossess', desc: 'Pawn bırakıldığında' }
+                ],
+                methods: [
+                    { name: 'Possess', desc: 'Verdiğiniz pawn\'ı kontrol etmeye başlar' },
+                    { name: 'UnPossess', desc: 'Mevcut pawn\'ı bırakır' },
+                    { name: 'GetPawn', desc: 'Kontrol edilen pawn\'ı döndürür' }
+                ],
+                blueprintNotes: 'Doğrudan C++ sınıfı; Blueprint için PlayerController veya AIController türevlerini kullanın.',
                 examples: [
                     'Oyuncunun iradesini karaktere aktaran sistem',
                     'Yapay zeka (AI) karar mekanizması',
@@ -90,7 +249,25 @@ export const actorData = [
                     {
                         id: 'AAIController',
                         name: 'AAIController',
+                        color: '#9C27B0',
+                        icon: '🤖',
+                        badge: 'Controller',
                         description: 'Yapay Zeka (AI) tarafından yönetilen karakterlerin beynidir.\n\n🤔 NEDİR BU?\nPlayerController\'ın robot versiyonudur. Klavye yerine "Behavior Tree" (Davranış Ağacı) ve "Blackboard" (Hafıza) kullanır. Görme ve duyma (Perception) yetenekleri buraya eklenir.\n\n💡 NE ZAMAN KULLANMALIYIM?\nDüşmanlar, dost NPC\'ler, hayvanlar... Kısaca insan olmayan ve hareket eden her şey için. "Karakteri gördün mü?", "Ses duydun mu?", "Nereye devriye atayım?" sorularının cevabı burada verilir.',
+                        properties: [
+                            { name: 'BrainComponent', type: 'UBrainComponent', desc: 'Behavior Tree veya AI Logic' },
+                            { name: 'PerceptionComponent', type: 'UAIPerceptionComponent', desc: 'Görme/duyma algısı' },
+                            { name: 'PathFollowingComponent', type: 'UPathFollowingComponent', desc: 'Yol takibi' }
+                        ],
+                        events: [
+                            { name: 'OnPossess', desc: 'Pawn ele geçirildiğinde' },
+                            { name: 'OnMoveCompleted', desc: 'Hareket tamamlandığında' }
+                        ],
+                        methods: [
+                            { name: 'MoveToLocation', desc: 'Belirtilen konuma git' },
+                            { name: 'RunBehaviorTree', desc: 'Behavior Tree\'yi çalıştır' },
+                            { name: 'GetBlackboard', desc: 'Blackboard referansı alır' }
+                        ],
+                        blueprintNotes: 'Blueprint Class > AIController. Behavior Tree ve Blackboard ile AI davranışı tanımlayın.',
                         examples: [
                             '👮 Belirli bir rotada devriye gezen (Patrol) Muhafız',
                             '👀 Oyuncuyu görünce alarma geçen Güvenlik Sistemi',
@@ -98,14 +275,58 @@ export const actorData = [
                             '🐺 Sizi takip eden evcil hayvan (Pet)',
                             '🧟 Ses gelen yere doğru yürüyen Zombi sürüsü'
                         ],
-                        children: []
+                        children: [
+                            {
+                                id: 'BP_AIController',
+                                name: 'BP_AIController',
+                                color: '#9C27B0',
+                                icon: '🤖',
+                                badge: 'Blueprint',
+                                description: 'AI davranışını Blueprint ile özelleştirmek için kullanılan AIController türevi.',
+                                properties: [
+                                    { name: 'BrainComponent', type: 'UBrainComponent', desc: 'AI beyin bileşeni' },
+                                    { name: 'PerceptionComponent', type: 'UAIPerceptionComponent', desc: 'Algı bileşeni' }
+                                ],
+                                events: [
+                                    { name: 'OnPossess', desc: 'Pawn ele geçirildiğinde' },
+                                    { name: 'ReceiveMoveCompleted', desc: 'Hareket bittiğinde' }
+                                ],
+                                methods: [
+                                    { name: 'MoveToLocation', desc: 'Konuma git' },
+                                    { name: 'RunBehaviorTree', desc: 'Behavior Tree başlat' }
+                                ],
+                                blueprintNotes: 'Content Browser > Blueprint Class > AIController. Spawn edilen AI karakterlerin Controller Class\'ı olarak atayın.',
+                                examples: [
+                                    'Özel düşman AI',
+                                    'NPC davranış ağacı',
+                                    'Pet takip mantığı'
+                                ],
+                                children: []
+                            }
+                        ]
                     }
                 ]
             },
             {
                 id: 'AInfo',
                 name: 'AInfo (Info Actors)',
+                color: '#E91E63',
+                icon: '📋',
+                badge: 'Info Base',
                 description: 'Fiziksel dünyada var olmayan ama "Yönetici" görevi gören aktörlerdir. Görünmez birer müdür gibidirler.\n\n🤔 NEDİR BU?\nBunlar haritada bir yer kaplamaz, şekilleri yoktur. Ama oyunun kurallarını, süresini, skor tablosunu yönetirler. Oyunun "Business Logic" katmanıdır.\n\n💡 NE ZAMAN KULLANMALIYIM?\n"Oyunun kurallarını nereye yazsam?" dediğiniz an buradasınız. Maç süresi, takım puanları, oyunun modu gibi global verileri saklamak için kullanılır.',
+                properties: [
+                    { name: 'Role', type: 'ENetRole', desc: 'Ağ rolü (Authority/SimulatedProxy)' },
+                    { name: 'RemoteViewTarget', type: 'AActor', desc: 'Uzaktan görüntü hedefi' }
+                ],
+                events: [
+                    { name: 'BeginPlay', desc: 'Oyun başında' },
+                    { name: 'EndPlay', desc: 'Oyun bittiğinde' }
+                ],
+                methods: [
+                    { name: 'GetWorld', desc: 'World referansı döndürür' },
+                    { name: 'GetNetMode', desc: 'Ağ modunu döndürür' }
+                ],
+                blueprintNotes: 'Temel C++ sınıfı; GameMode, GameState gibi türevleri kullanın.',
                 examples: [
                     '⏱️ Maç süresini sayan sayaç',
                     '🏆 Takım skorlarını tutan hafıza',
@@ -117,7 +338,26 @@ export const actorData = [
                     {
                         id: 'AGameModeBase',
                         name: 'AGameMode',
+                        color: '#E91E63',
+                        icon: '⚖️',
+                        badge: 'Info',
                         description: 'Oyunun MUTLAK OTORİTESİDİR (Yetkili Abi). Sadece ve sadece Sunucuda (Server) çalışır.\n\n🤔 NEDİR BU?\nHile yapılmasını engellemek için, oyunun en kritik kararlarını veren sınıftır. "Oyuncu oyuna girebilir mi?", "Maç bitti mi?", "Kim kazandı?" sorularının cevabını sadece GameMode bilir. İstemciler (Clients) buna erişemez.\n\n💡 NE ZAMAN KULLANMALIYIM?\nOyunun kuralları için. Oyuncu doğma (Spawn) kuralları, maçın süresi, kazanma şartları gibi hileye kapalı olması gereken her şeyi buraya yazın.',
+                        properties: [
+                            { name: 'DefaultPawnClass', type: 'UClass', desc: 'Varsayılan oyuncu karakteri sınıfı' },
+                            { name: 'PlayerControllerClass', type: 'UClass', desc: 'Oyuncu controller sınıfı' },
+                            { name: 'GameStateClass', type: 'UClass', desc: 'GameState sınıfı' }
+                        ],
+                        events: [
+                            { name: 'InitGame', desc: 'Oyun başlamadan önce' },
+                            { name: 'PostLogin', desc: 'Oyuncu sunucuya bağlandığında' },
+                            { name: 'Logout', desc: 'Oyuncu ayrıldığında' }
+                        ],
+                        methods: [
+                            { name: 'SpawnDefaultPawnFor', desc: 'Oyuncu için varsayılan pawn spawn eder' },
+                            { name: 'RestartPlayer', desc: 'Oyuncuyu yeniden doğurur' },
+                            { name: 'GetGameState', desc: 'GameState referansı döndürür' }
+                        ],
+                        blueprintNotes: 'World Settings > GameMode\'da atayın. Blueprint ile kuralları override edin.',
                         examples: [
                             '🚩 "Bayrağı kapan kazanır" kuralı',
                             '🐣 Oyuncunun nerede ve hangi silahla doğacağı (Spawn)',
@@ -125,12 +365,57 @@ export const actorData = [
                             '🚫 Hile koruması ve oyuncu atma (Kick) yetkisi',
                             '⏸️ Oyunu durdurma ve başlatma yetkisi'
                         ],
-                        children: []
+                        children: [
+                            {
+                                id: 'BP_GameMode',
+                                name: 'BP_GameMode',
+                                color: '#E91E63',
+                                icon: '📋',
+                                badge: 'Blueprint',
+                                description: 'Oyun kurallarını Blueprint ile tanımlamak için GameMode türevi.',
+                                properties: [
+                                    { name: 'DefaultPawnClass', type: 'UClass', desc: 'Varsayılan pawn' },
+                                    { name: 'PlayerControllerClass', type: 'UClass', desc: 'Player controller sınıfı' }
+                                ],
+                                events: [
+                                    { name: 'InitGame', desc: 'Oyun başlamadan önce' },
+                                    { name: 'PostLogin', desc: 'Oyuncu giriş yaptığında' }
+                                ],
+                                methods: [
+                                    { name: 'SpawnDefaultPawnFor', desc: 'Pawn doğur' },
+                                    { name: 'RestartPlayer', desc: 'Oyuncuyu yeniden doğur' }
+                                ],
+                                blueprintNotes: 'Content Browser > Blueprint Class > Game Mode Base. World Settings\'te GameMode Override olarak seçin.',
+                                examples: [
+                                    'Özel spawn kuralları',
+                                    'Maç süresi ve skor',
+                                    'Kazanma koşulları'
+                                ],
+                                children: []
+                            }
+                        ]
                     },
                     {
                         id: 'AGameStateBase',
                         name: 'AGameState',
+                        color: '#E91E63',
+                        icon: '📊',
+                        badge: 'Info',
                         description: 'Sunucunun oyunculara gönderdiği "Durum Raporu"dur. \n\n🤔 NEDİR BU?\nGameMode sadece sunucudaydı ya, işte GameMode\'un "Bakın durum bu" diyerek herkese (Replicated) gönderdiği veriler GameState\'te tutulur. Tüm oyuncuların skorları, kalan süre, kimin kimi öldürdüğü gibi herkesin bilmesi gereken veriler buradadır.\n\n💡 NE ZAMAN KULLANMALIYIM?\nTüm oyuncuların ekranında aynı anda güncellenmesi gereken veriler için. "Maç kaç kaç?", "Hangi takım önde?" gibi soruların cevabı.',
+                        properties: [
+                            { name: 'PlayerArray', type: 'TArray<APlayerState>', desc: 'Oyundaki tüm oyuncu durumları' },
+                            { name: 'ServerWorldTimeSeconds', type: 'float', desc: 'Sunucu dünya zamanı' },
+                            { name: 'ReplicatedHasBegunPlay', type: 'bool', desc: 'Oyun başladı mı (replicated)' }
+                        ],
+                        events: [
+                            { name: 'BeginPlay', desc: 'Oyun başında' },
+                            { name: 'ReceivedGameModeClass', desc: 'GameMode sınıfı alındığında' }
+                        ],
+                        methods: [
+                            { name: 'GetPlayerStateFromController', desc: 'Controller\'dan PlayerState bulur' },
+                            { name: 'GetServerWorldTimeSeconds', desc: 'Sunucu zamanını döndürür' }
+                        ],
+                        blueprintNotes: 'GameMode\'da GameStateClass olarak atanır. Replicated değişkenler burada tutulur.',
                         examples: [
                             '⚽ Maç Skoru (Kırmızı: 3 - Mavi: 1)',
                             '⏱️ Kalan Süre (02:45)',
@@ -138,12 +423,58 @@ export const actorData = [
                             '👥 Serverdaki toplam oyuncu sayısı',
                             '🌞 Oyun içindeki güncel saat (Gece/Gündüz)'
                         ],
-                        children: []
+                        children: [
+                            {
+                                id: 'BP_GameState',
+                                name: 'BP_GameState',
+                                color: '#E91E63',
+                                icon: '📊',
+                                badge: 'Blueprint',
+                                description: 'Maç skoru, süre ve diğer replicated verileri Blueprint ile yönetmek için GameState türevi.',
+                                properties: [
+                                    { name: 'PlayerArray', type: 'TArray<APlayerState>', desc: 'Oyuncu listesi' },
+                                    { name: 'ServerWorldTimeSeconds', type: 'float', desc: 'Sunucu zamanı' }
+                                ],
+                                events: [
+                                    { name: 'BeginPlay', desc: 'Oyun başında' },
+                                    { name: 'Tick', desc: 'Her kare (isteğe bağlı)' }
+                                ],
+                                methods: [
+                                    { name: 'GetPlayerStateFromController', desc: 'Oyuncu durumunu bul' },
+                                    { name: 'GetServerWorldTimeSeconds', desc: 'Sunucu zamanını al' }
+                                ],
+                                blueprintNotes: 'Blueprint Class > Game State Base. GameMode Blueprint\'inizde GameState Class olarak atayın.',
+                                examples: [
+                                    'Skor ve süre değişkenleri',
+                                    'Replicated oyun durumu',
+                                    'Takım bilgileri'
+                                ],
+                                children: []
+                            }
+                        ]
                     },
                     {
                         id: 'APlayerState',
                         name: 'APlayerState',
+                        color: '#E91E63',
+                        icon: '🪪',
+                        badge: 'Info',
                         description: 'Her oyuncunun "Kimlik Kartı" veya "Karnesi"dir.\n\n🤔 NEDİR BU?\nPlayerController sadece oyuncunun kendisinde vardır, diğerleri göremez. Ama PlayerState herkese gönderilir (Replicated). Yani siz, karşınızdaki oyuncunun ismini, rütbesini veya pingini PlayerState\'ine bakarak öğrenirsiniz. Karakter (Pawn) ölse bile bu veri silinmez.\n\n💡 NE ZAMAN KULLANMALIYIM?\nOyuncunun ismi, takımı, skoru, klanı gibi "Karakter ölse de gitmemesi gereken" ve "Herkesin görmesi gereken" veriler için.',
+                        properties: [
+                            { name: 'PlayerName', type: 'FString', desc: 'Oyuncu adı' },
+                            { name: 'Score', type: 'float', desc: 'Oyuncu skoru' },
+                            { name: 'Ping', type: 'int32', desc: 'Gecikme (ms)' }
+                        ],
+                        events: [
+                            { name: 'BeginPlay', desc: 'Oyuncu state oluşturulduğunda' },
+                            { name: 'CopyProperties', desc: 'Başka state\'ten kopyalanırken' }
+                        ],
+                        methods: [
+                            { name: 'GetPlayerName', desc: 'Oyuncu adını döndürür' },
+                            { name: 'GetScore', desc: 'Skoru döndürür' },
+                            { name: 'SetScore', desc: 'Skoru günceller' }
+                        ],
+                        blueprintNotes: 'Genelde GameMode/PlayerController tarafından otomatik oluşturulur. Replicated değişkenler ekleyin.',
                         examples: [
                             '🏷️ Oyuncunun İsmi (Player Name)',
                             '📶 Oyuncunun Ping değeri',
@@ -156,7 +487,23 @@ export const actorData = [
                     {
                         id: 'AWorldSettings',
                         name: 'AWorldSettings',
+                        color: '#E91E63',
+                        icon: '🌍',
+                        badge: 'Info',
                         description: 'Odanın (Level) fiziksel ayarlarıdır.\n\n🤔 NEDİR BU?\nHer level\'ın kendine has kuralları olabilir. Bir level Ay\'dadır yerçekimi azdır, diğer level su altındadır. Bu ayarların yapıldığı yerdir.\n\n💡 NE ZAMAN KULLANMALIYIM?\nGenellikle kodla çok değiştirmeyiz, Editör üzerinden ayarlarız. "Kill Z" (Haritadan düşme yüksekliği) veya "Global Gravity" (Yerçekimi) ayarları için buraya bakılır.',
+                        properties: [
+                            { name: 'KillZ', type: 'float', desc: 'Bu Z altına düşen aktör yok edilir' },
+                            { name: 'WorldGravityZ', type: 'float', desc: 'Yerçekimi şiddeti' },
+                            { name: 'DefaultGameMode', type: 'TSubclassOf<AGameModeBase>', desc: 'Varsayılan GameMode' }
+                        ],
+                        events: [
+                            { name: 'BeginPlay', desc: 'Level yüklendiğinde' }
+                        ],
+                        methods: [
+                            { name: 'GetWorld', desc: 'World referansı' },
+                            { name: 'SetWorldGravityZ', desc: 'Yerçekimini ayarlar' }
+                        ],
+                        blueprintNotes: 'World Settings (Level\'da otomatik). Editörde Level\'a tıklayıp Details panelinden düzenleyin.',
                         examples: [
                             '🌑 Level\'daki yerçekimi şiddeti (Ay modunda düşük)',
                             '💀 Kill Z (Haritanın ne kadar altına düşerse ölsün?)',
@@ -171,7 +518,24 @@ export const actorData = [
             {
                 id: 'AStaticMeshActor',
                 name: 'AStaticMeshActor',
+                color: '#795548',
+                icon: '🧱',
+                badge: 'Mesh Actor',
                 description: 'Kıpırdamayan, iskeleti olmayan "Katı Cisimlerdir". \n\n🤔 NEDİR BU?\nOyunun dekorudur. Masalar, duvarlar, taşlar... Kısaca animasyon oynatmayan her şey. Performans dostudur, işlemciyi yormaz. Binlercesini sahneye koyabilirsiniz.\n\n💡 NE ZAMAN KULLANMALIYIM?\nEğer objeniz şekil değiştirmeyecekse, yürümeyecekse ve sadece olduğu yerde duracaksa (belki biraz fizik ile yuvarlanabilir) bunu kullanın. Nanite teknolojisi ile milyonlarca poligonluk versiyonlarını bile rahatça kullanabilirsiniz.',
+                properties: [
+                    { name: 'StaticMeshComponent', type: 'UStaticMeshComponent', desc: 'Static mesh bileşeni' },
+                    { name: 'StaticMesh', type: 'UStaticMesh', desc: 'Görüntülenecek mesh referansı' }
+                ],
+                events: [
+                    { name: 'BeginPlay', desc: 'Oyun başında' },
+                    { name: 'OnActorHit', desc: 'Bir şey çarptığında' }
+                ],
+                methods: [
+                    { name: 'SetMobility', desc: 'Hareketliliği ayarlar (Static/Movable)' },
+                    { name: 'GetStaticMeshComponent', desc: 'Mesh bileşenini döndürür' },
+                    { name: 'SetStaticMesh', desc: 'Mesh atar' }
+                ],
+                blueprintNotes: 'Place Actors > Shapes veya Static Mesh sürükleyin. Blueprint Class > Static Mesh Actor ile özelleştirin.',
                 examples: [
                     '🏠 Evin duvarları, zemini ve çatısı',
                     '🪑 Masa, sandalye, dolap gibi sabit eşyalar',
@@ -184,7 +548,24 @@ export const actorData = [
             {
                 id: 'ASkeletalMeshActor',
                 name: 'ASkeletalMeshActor',
+                color: '#795548',
+                icon: '🦴',
+                badge: 'Mesh Actor',
                 description: 'İçinde kemik (Bone) olan, bükülebilen modellerdir.\n\n🤔 NEDİR BU?\nStatic Mesh\'in aksine "Canlı" gibidir. Bir iskelet sistemi vardır ve animasyon oynatabilir. Bir bayrağın dalgalanması veya bir kapının kolunun dönmesi için kemik gerekir.\n\n💡 NE ZAMAN KULLANMALIYIM?\nModelinizin şekli değişecekse. Örneğin rüzgarda sallanan bir çadır, açılan bir sandık kapağı veya karmaşık bir makine animasyonu için bunu kullanın.',
+                properties: [
+                    { name: 'SkeletalMeshComponent', type: 'USkeletalMeshComponent', desc: 'İskelet mesh bileşeni' },
+                    { name: 'SkeletalMesh', type: 'USkeletalMesh', desc: 'Mesh referansı' }
+                ],
+                events: [
+                    { name: 'BeginPlay', desc: 'Oyun başında' },
+                    { name: 'Tick', desc: 'Her kare (animasyon güncellemesi)' }
+                ],
+                methods: [
+                    { name: 'GetSkeletalMeshComponent', desc: 'Skeletal mesh bileşenini döndürür' },
+                    { name: 'SetSkeletalMesh', desc: 'Mesh atar' },
+                    { name: 'PlayAnimation', desc: 'Animasyon oynatır' }
+                ],
+                blueprintNotes: 'Place Actors > Skeletal Mesh. Animasyonlu objeler (bayrak, kapı, makine) için.',
                 examples: [
                     '🚩 Rüzgarda dalgalanan bir Bayrak',
                     '⛓️ Sallanan bir zincir veya halat',
@@ -197,7 +578,25 @@ export const actorData = [
             {
                 id: 'ALight',
                 name: 'ALight (Lights)',
+                color: '#FFC107',
+                icon: '💡',
+                badge: 'Light Base',
                 description: 'Unreal dünyasında karanlığı yok eden ışık kaynaklarıdır. Işık yoksa render simsiyahtır.\n\n🤔 NEDİR BU?\nGerçek hayattaki ışıkların simülasyonudur. Oyunun atmosferini belirleyen en önemli unsurdur.\n\n💡 NE ZAMAN KULLANMALIYIM?\nSahnenizi, karakterinizi veya önemli bir objeyi aydınlatmak için. Hangi tip ışığı ne zaman kullanacağınız ise alt başlıklarda:',
+                properties: [
+                    { name: 'Intensity', type: 'float', desc: 'Işık şiddeti' },
+                    { name: 'LightColor', type: 'FLinearColor', desc: 'Işık rengi' },
+                    { name: 'CastShadows', type: 'bool', desc: 'Gölge düşürsün mü' }
+                ],
+                events: [
+                    { name: 'BeginPlay', desc: 'Oyun başında' },
+                    { name: 'Tick', desc: 'Her kare (dinamik ışık için)' }
+                ],
+                methods: [
+                    { name: 'SetIntensity', desc: 'Parlaklığı ayarlar' },
+                    { name: 'SetLightColor', desc: 'Rengi ayarlar' },
+                    { name: 'SetCastShadows', desc: 'Gölge aç/kapa' }
+                ],
+                blueprintNotes: 'Place Actors > Lights. Directional, Point, Spot, Rect Light türevlerini kullanın.',
                 examples: [
                     '☀️ Güneş (Directional Light)',
                     '💡 Ampul (Point Light)',
@@ -209,7 +608,23 @@ export const actorData = [
                     {
                         id: 'ADirectionalLight',
                         name: 'DirectionalLight',
+                        color: '#FFC107',
+                        icon: '☀️',
+                        badge: 'Light',
                         description: 'Güneş veya Ay ışığıdır.\n\n🤔 NEDİR BU?\nSonsuz uzaklıktan gelen, tüm dünyayı aynı açıyla aydınlatan paralel ışınlardır. Sahnenin neresine koyduğunuzun önemi yoktur, sadece hangi yöne döndürdüğünüzün önemi vardır.\n\n💡 NE ZAMAN KULLANMALIYIM?\nDış mekan (Outdoor) sahnelerde ana aydınlatma olarak. Bir sahnede genellikle sadece 1 tane (Güneş) veya 2 tane (Güneş + Ay) olur.',
+                        properties: [
+                            { name: 'Intensity', type: 'float', desc: 'Işık şiddeti' },
+                            { name: 'LightColor', type: 'FLinearColor', desc: 'Renk' },
+                            { name: 'DynamicShadowDistance', type: 'float', desc: 'Dinamik gölge mesafesi' }
+                        ],
+                        events: [
+                            { name: 'BeginPlay', desc: 'Oyun başında' }
+                        ],
+                        methods: [
+                            { name: 'SetIntensity', desc: 'Şiddeti ayarla' },
+                            { name: 'SetLightColor', desc: 'Rengi ayarla' }
+                        ],
+                        blueprintNotes: 'Place Actors > Directional Light. Dış mekan ana ışığı.',
                         examples: [
                             '🌞 Öğle vakti tepeden vuran sert Güneş',
                             '🌅 Gün batımında yatay gelen turuncu ışık',
@@ -222,7 +637,23 @@ export const actorData = [
                     {
                         id: 'APointLight',
                         name: 'PointLight',
+                        color: '#FFC107',
+                        icon: '🔆',
+                        badge: 'Light',
                         description: 'Her yöne ışık saçan küresel ışık kaynağıdır (Ampul).\n\n🤔 NEDİR BU?\nBir noktadan çıkar ve 360 derece etrafına yayılır. Uzaklaştıkça gücü azalır (Attenuation).\n\n💡 NE ZAMAN KULLANMALIYIM?\nAmpuller, ateş topları, mumlar veya patlamalar için. Lokal aydınlatmanın kralıdır.',
+                        properties: [
+                            { name: 'Intensity', type: 'float', desc: 'Işık şiddeti' },
+                            { name: 'AttenuationRadius', type: 'float', desc: 'Işığın ulaştığı mesafe' },
+                            { name: 'LightColor', type: 'FLinearColor', desc: 'Renk' }
+                        ],
+                        events: [
+                            { name: 'BeginPlay', desc: 'Oyun başında' }
+                        ],
+                        methods: [
+                            { name: 'SetIntensity', desc: 'Şiddeti ayarla' },
+                            { name: 'SetAttenuationRadius', desc: 'Menzili ayarla' }
+                        ],
+                        blueprintNotes: 'Place Actors > Point Light. Ampul, ateş, patlama aydınlatması.',
                         examples: [
                             '🕯️ Masadaki titreyen mum alevi',
                             '💡 Tavanda asılı duran ampul',
@@ -235,7 +666,23 @@ export const actorData = [
                     {
                         id: 'ASpotLight',
                         name: 'SpotLight',
+                        color: '#FFC107',
+                        icon: '🔦',
+                        badge: 'Light',
                         description: 'Koni şeklinde odaklanmış ışıktır (El feneri).\n\n🤔 NEDİR BU?\nIşığı her yere saçmaz, sadece baktığı yöne doğru bir koni içinde atar. Tiyatro sahnesindeki spotlar gibidir.\n\n💡 NE ZAMAN KULLANMALIYIM?\nOyuncunun dikkatini belirli bir yere çekmek için veya el feneri, araba farı, sokak lambası gibi yönlü ışık kaynakları için.',
+                        properties: [
+                            { name: 'InnerConeAngle', type: 'float', desc: 'İç koni açısı' },
+                            { name: 'OuterConeAngle', type: 'float', desc: 'Dış koni açısı' },
+                            { name: 'AttenuationRadius', type: 'float', desc: 'Menzil' }
+                        ],
+                        events: [
+                            { name: 'BeginPlay', desc: 'Oyun başında' }
+                        ],
+                        methods: [
+                            { name: 'SetInnerConeAngle', desc: 'İç açıyı ayarla' },
+                            { name: 'SetOuterConeAngle', desc: 'Dış açıyı ayarla' }
+                        ],
+                        blueprintNotes: 'Place Actors > Spot Light. El feneri, araba farı, sahne spotu.',
                         examples: [
                             '🔦 Karakterin el feneri',
                             '🚘 Arabanın ön farları',
@@ -248,7 +695,23 @@ export const actorData = [
                     {
                         id: 'ARectLight',
                         name: 'RectLight',
+                        color: '#FFC107',
+                        icon: '▢',
+                        badge: 'Light',
                         description: 'Kare veya dikdörtgen panelden yayılan ışıktır.\n\n🤔 NEDİR BU?\nTelevizyon ekranı veya fotoğrafçıların kullandığı "Softbox" ışığı gibidir. Geniş bir yüzeyden çıktığı için gölgeleri çok yumuşak ve gerçekçidir.\n\n💡 NE ZAMAN KULLANMALIYIM?\nModern iç mekan sahnelerinde, pencerelerden giren ışığı taklit ederken veya TV/Monitör parlaması yaparken.',
+                        properties: [
+                            { name: 'SourceWidth', type: 'float', desc: 'Işık paneli genişliği' },
+                            { name: 'SourceHeight', type: 'float', desc: 'Işık paneli yüksekliği' },
+                            { name: 'Intensity', type: 'float', desc: 'Şiddet' }
+                        ],
+                        events: [
+                            { name: 'BeginPlay', desc: 'Oyun başında' }
+                        ],
+                        methods: [
+                            { name: 'SetSourceWidth', desc: 'Genişliği ayarla' },
+                            { name: 'SetSourceHeight', desc: 'Yüksekliği ayarla' }
+                        ],
+                        blueprintNotes: 'Place Actors > Rect Light. Pencere, TV, softbox aydınlatması.',
                         examples: [
                             '📺 Açık çalışan televizyon ekranının odaya verdiği ışık',
                             '🖼️ Pencereden içeri sızan gün ışığı',
@@ -263,7 +726,24 @@ export const actorData = [
             {
                 id: 'ACameraActor',
                 name: 'ACameraActor',
+                color: '#607D8B',
+                icon: '📷',
+                badge: 'Camera',
                 description: 'Dünyayı gören sanal gözdür.\n\n🤔 NEDİR BU?\nRender işleminin hangi açıdan yapılacağını belirler. Oyuncu her zaman bir kameradan bakar.\n\n💡 NE ZAMAN KULLANMALIYIM?\nOyuncunun gözü dışında (PlayerCamera), sinematik sahneler (Cutscenes) veya sabit açılı görüntüler (Güvenlik kamerası odası) gerektiğinde level\'a yerleştirilir.',
+                properties: [
+                    { name: 'CameraComponent', type: 'UCameraComponent', desc: 'Kamera bileşeni' },
+                    { name: 'FieldOfView', type: 'float', desc: 'Görüş açısı (FOV)' },
+                    { name: 'AspectRatio', type: 'float', desc: 'En-boy oranı' }
+                ],
+                events: [
+                    { name: 'BeginPlay', desc: 'Oyun başında' },
+                    { name: 'Tick', desc: 'Her kare' }
+                ],
+                methods: [
+                    { name: 'GetCameraComponent', desc: 'Kamera bileşenini döndürür' },
+                    { name: 'SetViewTarget', desc: 'PlayerController\'da hedef olarak ayarlar' }
+                ],
+                blueprintNotes: 'Place Actors > Cine Camera Actor veya Camera Actor. Sinematik veya sabit kamera.',
                 examples: [
                     '🎬 Ara sahneleri (Cutscene) çeken yönetmen kamerası',
                     '📹 Güvenlik odasındaki monitörlere bağlı güvenlik kameraları',
@@ -276,7 +756,23 @@ export const actorData = [
             {
                 id: 'ATriggerBase',
                 name: 'ATrigger (Triggers)',
+                color: '#FF5722',
+                icon: '📡',
+                badge: 'Trigger',
                 description: 'Görünmez sensörlerdir. \n\n🤔 NEDİR BU?\nOyunda "Buraya gelince bir şey olsun" dediğimiz alanlardır. Oyuncu içine girdiği an (Overlap) bir sinyal (Event) gönderirler.\n\n💡 NE ZAMAN KULLANMALIYIM?\nOtomatik kapılar, tuzaklar, ara sahne başlatıcılar... Kısaca oyuncunun konumuna göre tetiklenecek her türlü oyun mantığı için.',
+                properties: [
+                    { name: 'CollisionComponent', type: 'UShapeComponent', desc: 'Algılama şekli (Box/Sphere)' },
+                    { name: 'CollisionProfile', type: 'FName', desc: 'Çarpışma profili' }
+                ],
+                events: [
+                    { name: 'ActorBeginOverlap', desc: 'Bir aktör alana girdiğinde' },
+                    { name: 'ActorEndOverlap', desc: 'Bir aktör alandan çıktığında' }
+                ],
+                methods: [
+                    { name: 'GetOverlappingActors', desc: 'İçindeki aktörleri listeler' },
+                    { name: 'SetCollisionEnabled', desc: 'Çarpışmayı açıp kapatır' }
+                ],
+                blueprintNotes: 'Place Actors > Trigger Box veya Trigger Sphere. Overlap event\'lerini Blueprint\'te bağlayın.',
                 examples: [
                     '🚪 Otomatik kapının önüne gelince kapının açılması',
                     '💀 Tuzağa basınca ok fırlatılması',
@@ -288,7 +784,23 @@ export const actorData = [
                     {
                         id: 'ABoxTrigger',
                         name: 'BoxTrigger',
+                        color: '#FF5722',
+                        icon: '📦',
+                        badge: 'Trigger',
                         description: 'Kutu (Küp) şeklinde algılama alanı.\n\n💡 KULLANIM:\nKoridorlar, dikdörtgen odalar veya kapı önleri için idealdir.',
+                        properties: [
+                            { name: 'BoxExtent', type: 'FVector', desc: 'Kutu yarı boyutları' },
+                            { name: 'CollisionComponent', type: 'UBoxComponent', desc: 'Kutu çarpışma bileşeni' }
+                        ],
+                        events: [
+                            { name: 'ActorBeginOverlap', desc: 'Aktör kutuya girdiğinde' },
+                            { name: 'ActorEndOverlap', desc: 'Aktör kutudan çıktığında' }
+                        ],
+                        methods: [
+                            { name: 'GetOverlappingActors', desc: 'İçindeki aktörleri döndürür' },
+                            { name: 'SetBoxExtent', desc: 'Kutu boyutunu ayarlar' }
+                        ],
+                        blueprintNotes: 'Place Actors > Trigger Box. Box Extent ile boyutu ayarlayın.',
                         examples: [
                             '🏠 Bir odaya veya koridora girişi algılama',
                             '🛗 Asansörün içine binildiğini anlama',
@@ -301,7 +813,23 @@ export const actorData = [
                     {
                         id: 'ASphereTrigger',
                         name: 'SphereTrigger',
+                        color: '#FF5722',
+                        icon: '⚪',
+                        badge: 'Trigger',
                         description: 'Küre (Top) şeklinde algılama alanı.\n\n💡 KULLANIM:\nEşya toplama, NPC konuşma menzili gibi merkezden dışa doğru yayılan alanlar için idealdir.',
+                        properties: [
+                            { name: 'SphereRadius', type: 'float', desc: 'Küre yarıçapı' },
+                            { name: 'CollisionComponent', type: 'USphereComponent', desc: 'Küre çarpışma bileşeni' }
+                        ],
+                        events: [
+                            { name: 'ActorBeginOverlap', desc: 'Aktör küreye girdiğinde' },
+                            { name: 'ActorEndOverlap', desc: 'Aktör küreden çıktığında' }
+                        ],
+                        methods: [
+                            { name: 'GetOverlappingActors', desc: 'İçindeki aktörleri döndürür' },
+                            { name: 'SetSphereRadius', desc: 'Yarıçapı ayarlar' }
+                        ],
+                        blueprintNotes: 'Place Actors > Trigger Sphere. Sphere Radius ile menzili ayarlayın.',
                         examples: [
                             '💰 Yerden altın toplama mesafesi',
                             '💣 Mayının patlama menzili',
@@ -316,7 +844,23 @@ export const actorData = [
             {
                 id: 'AVolume',
                 name: 'AVolume',
+                color: '#FF5722',
+                icon: '📐',
+                badge: 'Volume',
                 description: 'İçine girebildiğiniz, 3 boyutlu etki alanlarıdır.\n\n🤔 NEDİR BU?\nTrigger gibi "girince haber ver" demez, bunun yerine "içindeyken fizik kurallarını veya görüntüyü değiştir" der.\n\n💡 NE ZAMAN KULLANMALIYIM?\nSu altı, zehirli bölge, düşük yerçekimli alan veya karanlık bir mağara yaparken.',
+                properties: [
+                    { name: 'BrushComponent', type: 'UBrushComponent', desc: 'Hacim şeklini tanımlar' },
+                    { name: 'bColored', type: 'bool', desc: 'Editörde renkli göster' }
+                ],
+                events: [
+                    { name: 'ActorBeginOverlap', desc: 'Aktör volume\'e girdiğinde' },
+                    { name: 'ActorEndOverlap', desc: 'Aktör volume\'den çıktığında' }
+                ],
+                methods: [
+                    { name: 'EncompassesPoint', desc: 'Nokta volume içinde mi döndürür' },
+                    { name: 'GetBounds', desc: 'Volume sınırlarını döndürür' }
+                ],
+                blueprintNotes: 'Place Actors > Volumes. Post Process, Physics, Killing vb. türevleri var.',
                 examples: [
                     '🏊 Suyun içi (Karakter yüzer, nefesi azalır, hareket yavaşlar)',
                     '⚛️ Radyasyon bölgesi (Sürekli can azalır)',
@@ -328,7 +872,23 @@ export const actorData = [
                     {
                         id: 'APostProcessVolume',
                         name: 'PostProcessVolume',
+                        color: '#FF5722',
+                        icon: '🖼️',
+                        badge: 'Volume',
                         description: 'Kameranın lensine takılan filtre gibidir. \n\n🤔 NEDİR BU?\nOyunun renklerini, parlaklığını veya efektlerini sadece belirli bir bölgede değiştirir. \n\n💡 KULLANIM:\nSu altına girince ekranı bulandırmak, hasar alınca ekranı kızartmak veya bir rüya sahnesinde renkleri soluklaştırmak için.',
+                        properties: [
+                            { name: 'Settings', type: 'FPostProcessSettings', desc: 'Post process ayarları' },
+                            { name: 'BlendRadius', type: 'float', desc: 'Geçiş yumuşaklık yarıçapı' },
+                            { name: 'BlendWeight', type: 'float', desc: 'Etki ağırlığı (0-1)' }
+                        ],
+                        events: [
+                            { name: 'BeginPlay', desc: 'Oyun başında' }
+                        ],
+                        methods: [
+                            { name: 'GetSettings', desc: 'Ayarları döndürür' },
+                            { name: 'SetSettings', desc: 'Ayarları günceller' }
+                        ],
+                        blueprintNotes: 'Place Actors > Post Process Volume. Unbound yaparsanız tüm sahneye uygular.',
                         examples: [
                             '💧 Su altına girince görüntünün mavi ve bulanık olması',
                             '😵 Hasar alınca ekranın kenarlarının kanlanması (Vignette)',
@@ -341,7 +901,24 @@ export const actorData = [
                     {
                         id: 'APhysicsVolume',
                         name: 'PhysicsVolume',
+                        color: '#FF5722',
+                        icon: '🌊',
+                        badge: 'Volume',
                         description: 'Fizik kurallarını büken alandır.\n\n🤔 NEDİR BU?\nKarakterin hareketlerini etkiler. Sürtünmeyi azaltıp buz pisti yapabilir veya yerçekimini kapatıp uzay boşluğu yaratabilirsiniz.\n\n💡 KULLANIM:\nSu, Balçık, Buz, Uzay boşluğu simülasyonları için.',
+                        properties: [
+                            { name: 'GravityZ', type: 'float', desc: 'Yerçekimi (bu volume içinde)' },
+                            { name: 'TerminalVelocity', type: 'float', desc: 'Maksimum düşüş hızı' },
+                            { name: 'FluidFriction', type: 'float', desc: 'Sıvı sürtünmesi' }
+                        ],
+                        events: [
+                            { name: 'ActorEnteredVolume', desc: 'Aktör volume\'e girdiğinde' },
+                            { name: 'ActorLeavingVolume', desc: 'Aktör volume\'den çıkarken' }
+                        ],
+                        methods: [
+                            { name: 'GetGravityZ', desc: 'Yerçekimini döndürür' },
+                            { name: 'SetGravityZ', desc: 'Yerçekimini ayarlar' }
+                        ],
+                        blueprintNotes: 'Place Actors > Physics Volume. Su, buz, uzay için Gravity Z ve Fluid Friction ayarlayın.',
                         examples: [
                             '🌊 Su kütlesi (Yerçekimi azalır, sürtünme artar)',
                             '👩‍🚀 Uzay gemisi içi (Sıfır yerçekimi)',
@@ -354,7 +931,22 @@ export const actorData = [
                     {
                         id: 'ABlockingVolume',
                         name: 'BlockingVolume',
+                        color: '#FF5722',
+                        icon: '🚧',
+                        badge: 'Volume',
                         description: 'Görünmez duvardır. \n\n🤔 NEDİR BU?\nBasitçe, geçilemeyen alandır. Oyuncu duvara çarpar gibi buna çarpar.\n\n💡 NE ZAMAN KULLANMALIYIM?\nOyuncunun harita dışına çıkmasını engellemek veya henüz açılmamış bir bölgeye girişini kapatmak için.',
+                        properties: [
+                            { name: 'BrushComponent', type: 'UBrushComponent', desc: 'Hacim şekli' },
+                            { name: 'CollisionProfile', type: 'FName', desc: 'BlockAll vb.' }
+                        ],
+                        events: [
+                            { name: 'BeginPlay', desc: 'Oyun başında' }
+                        ],
+                        methods: [
+                            { name: 'SetCollisionEnabled', desc: 'Çarpışmayı açıp kapatır' },
+                            { name: 'GetBounds', desc: 'Volume sınırlarını döndürür' }
+                        ],
+                        blueprintNotes: 'Place Actors > Blocking Volume. Görünmez duvar ve harita sınırı.',
                         examples: [
                             '🚧 Harita sınırları (Invisible Wall)',
                             '🏙️ Binaların çatılarına çıkmayı engelleme',
@@ -369,7 +961,24 @@ export const actorData = [
             {
                 id: 'AEmitter',
                 name: 'AEmitter (Particle)',
+                color: '#607D8B',
+                icon: '✨',
+                badge: 'Emitter',
                 description: 'Görsel efekt (VFX) kaynağıdır.\n\n🤔 NEDİR BU?\nHavada uçuşan kıvılcımlar, dumanlar, yapraklar... Particle System (Niagara) oynatan aktördür.\n\n💡 NE ZAMAN KULLANMALIYIM?\nDünyayı canlandırmak için. Ateş, duman, sis, yağmur, kan efekti gibi dinamik görseller için.',
+                properties: [
+                    { name: 'ParticleSystemComponent', type: 'UParticleSystemComponent', desc: 'Eski particle bileşeni' },
+                    { name: 'NiagaraComponent', type: 'UNiagaraComponent', desc: 'Niagara VFX bileşeni' }
+                ],
+                events: [
+                    { name: 'BeginPlay', desc: 'Oyun başında (efekt başlar)' },
+                    { name: 'EndPlay', desc: 'Oyun bittiğinde' }
+                ],
+                methods: [
+                    { name: 'Activate', desc: 'Efekti başlatır' },
+                    { name: 'Deactivate', desc: 'Efekti durdurur' },
+                    { name: 'SetNiagaraAsset', desc: 'Niagara sistem atar' }
+                ],
+                blueprintNotes: 'Place Actors > Niagara Particle System. VFX için Niagara sistemleri kullanın.',
                 examples: [
                     '🔥 Kamp ateşi, Meşale alevi',
                     '🌫️ Bacadan çıkan duman, Sis',
@@ -377,6 +986,430 @@ export const actorData = [
                     '✨ Büyü yapınca çıkan parıltılar',
                     '🩸 Vurulunca çıkan kan efekti'
                 ],
+                children: []
+            }
+        ]
+    },
+    {
+        id: 'UActorComponent',
+        name: 'UActorComponent',
+        color: '#00BCD4',
+        icon: '🧩',
+        badge: 'Component Base',
+        description: 'Aktörlere eklenebilen yeniden kullanılabilir parçalardır. Görünmez veya görünür (mesh, ışık) olabilir; hareket, ses, AI, input gibi davranışları ekler.',
+        properties: [
+            { name: 'Owner', type: 'AActor', desc: 'Bağlı olduğu aktör' },
+            { name: 'bAutoActivate', type: 'bool', desc: 'Başlarken otomatik aktif olsun mu' }
+        ],
+        events: [
+            { name: 'BeginPlay', desc: 'Bileşen ilk kez aktif olduğunda' },
+            { name: 'EndPlay', desc: 'Bileşen kaldırıldığında' }
+        ],
+        methods: [
+            { name: 'GetOwner', desc: 'Sahip aktörü döndürür' },
+            { name: 'Activate', desc: 'Bileşeni aktif eder' },
+            { name: 'Deactivate', desc: 'Bileşeni devre dışı bırakır' }
+        ],
+        blueprintNotes: 'Add Component menüsünden mevcut component\'leri ekleyin veya Blueprint Class > Actor Component ile özel bileşen yazın.',
+        examples: [
+            'Hareket, ses, çarpışma, ışık, kamera bileşenleri'
+        ],
+        children: [
+            {
+                id: 'USceneComponent',
+                name: 'USceneComponent',
+                color: '#00BCD4',
+                icon: '📍',
+                badge: 'Component',
+                description: 'Konum, dönüş ve ölçek bilgisi taşıyan bileşen tabanı. Hierarchy (parent-child) kurulabilir.',
+                properties: [
+                    { name: 'RelativeLocation', type: 'FVector', desc: 'Ebeveyne göre konum' },
+                    { name: 'RelativeRotation', type: 'FRotator', desc: 'Ebeveyne göre dönüş' },
+                    { name: 'RelativeScale3D', type: 'FVector', desc: 'Ebeveyne göre ölçek' }
+                ],
+                events: [
+                    { name: 'BeginPlay', desc: 'Bileşen başladığında' }
+                ],
+                methods: [
+                    { name: 'GetWorldLocation', desc: 'Dünya konumunu döndürür' },
+                    { name: 'AttachToComponent', desc: 'Başka bileşene bağlanır' },
+                    { name: 'GetRelativeTransform', desc: 'Relative transform döndürür' }
+                ],
+                blueprintNotes: 'Tüm sahne hiyerarşisi bu sınıftan türer. Add Component > Scene Component.',
+                examples: [],
+                children: [
+                    {
+                        id: 'UPrimitiveComponent',
+                        name: 'UPrimitiveComponent',
+                        color: '#00BCD4',
+                        icon: '🔷',
+                        badge: 'Component',
+                        description: 'Çarpışma ve render edilebilir geometri içeren bileşen tabanı.',
+                        properties: [
+                            { name: 'BodyInstance', type: 'FBodyInstance', desc: 'Fizik gövdesi' },
+                            { name: 'CollisionProfileName', type: 'FName', desc: 'Çarpışma profili' },
+                            { name: 'bGenerateOverlapEvents', type: 'bool', desc: 'Overlap event üretsin mi' }
+                        ],
+                        events: [
+                            { name: 'Hit', desc: 'Çarpışma olduğunda' },
+                            { name: 'BeginOverlap', desc: 'Overlap başladığında' },
+                            { name: 'EndOverlap', desc: 'Overlap bittiğinde' }
+                        ],
+                        methods: [
+                            { name: 'SetSimulatePhysics', desc: 'Fiziği açar/kapatır' },
+                            { name: 'SetCollisionEnabled', desc: 'Çarpışmayı ayarlar' },
+                            { name: 'GetComponentLocation', desc: 'Konumu döndürür' }
+                        ],
+                        blueprintNotes: 'Mesh ve şekil bileşenleri buradan türer. Collision ayarları burada.',
+                        examples: [],
+                        children: [
+                            {
+                                id: 'UStaticMeshComponent',
+                                name: 'UStaticMeshComponent',
+                                color: '#00BCD4',
+                                icon: '🧱',
+                                badge: 'Component',
+                                description: 'Static mesh (animasyonsuz model) gösterir.',
+                                properties: [
+                                    { name: 'StaticMesh', type: 'UStaticMesh', desc: 'Mesh referansı' },
+                                    { name: 'OverrideMaterials', type: 'TArray<UMaterialInterface>', desc: 'Materyal override' }
+                                ],
+                                events: [
+                                    { name: 'OnComponentHit', desc: 'Çarpışma' },
+                                    { name: 'OnBeginOverlap', desc: 'Overlap başlangıcı' }
+                                ],
+                                methods: [
+                                    { name: 'SetStaticMesh', desc: 'Mesh atar' },
+                                    { name: 'SetMaterial', desc: 'Materyal atar' },
+                                    { name: 'GetStaticMesh', desc: 'Mesh döndürür' }
+                                ],
+                                blueprintNotes: 'Add Component > Static Mesh. Dekoratif ve fizik objeleri.',
+                                examples: [],
+                                children: []
+                            },
+                            {
+                                id: 'USkeletalMeshComponent',
+                                name: 'USkeletalMeshComponent',
+                                color: '#00BCD4',
+                                icon: '🦴',
+                                badge: 'Component',
+                                description: 'İskelet mesh ve animasyon oynatır.',
+                                properties: [
+                                    { name: 'SkeletalMesh', type: 'USkeletalMesh', desc: 'Mesh referansı' },
+                                    { name: 'AnimClass', type: 'UClass', desc: 'Animasyon blueprint sınıfı' }
+                                ],
+                                events: [
+                                    { name: 'OnAnimNotify', desc: 'Animasyon notify\'da' },
+                                    { name: 'OnComponentHit', desc: 'Çarpışma' }
+                                ],
+                                methods: [
+                                    { name: 'SetSkeletalMesh', desc: 'Mesh atar' },
+                                    { name: 'PlayAnimation', desc: 'Animasyon oynatır' },
+                                    { name: 'GetSocketLocation', desc: 'Soket konumunu döndürür' }
+                                ],
+                                blueprintNotes: 'Karakter ve animasyonlu objelerde. Add Component > Skeletal Mesh.',
+                                examples: [],
+                                children: []
+                            },
+                            {
+                                id: 'UShapeComponent',
+                                name: 'UShapeComponent',
+                                color: '#00BCD4',
+                                icon: '⬜',
+                                badge: 'Component',
+                                description: 'Basit geometrik şekil (kutu, küre, kapsül) çarpışma bileşeni tabanı.',
+                                properties: [
+                                    { name: 'ShapeColor', type: 'FColor', desc: 'Editörde görünen renk' }
+                                ],
+                                events: [
+                                    { name: 'BeginOverlap', desc: 'Overlap başlangıcı' },
+                                    { name: 'EndOverlap', desc: 'Overlap sonu' }
+                                ],
+                                methods: [
+                                    { name: 'SetCollisionProfileName', desc: 'Profil atar' },
+                                    { name: 'GetScaledBoxExtent', desc: 'Kutu boyutu (Box için)' }
+                                ],
+                                blueprintNotes: 'Trigger ve çarpışma şekilleri. Capsule, Box, Sphere türevleri.',
+                                examples: [],
+                                children: [
+                                    {
+                                        id: 'UCapsuleComponent',
+                                        name: 'UCapsuleComponent',
+                                        color: '#00BCD4',
+                                        icon: '💊',
+                                        badge: 'Component',
+                                        description: 'Kapsül şeklinde çarpışma. Karakter hitbox\'ı için standart.',
+                                        properties: [
+                                            { name: 'CapsuleHalfHeight', type: 'float', desc: 'Kapsül yarım yüksekliği' },
+                                            { name: 'CapsuleRadius', type: 'float', desc: 'Kapsül yarıçapı' }
+                                        ],
+                                        events: [
+                                            { name: 'BeginOverlap', desc: 'Overlap' },
+                                            { name: 'Hit', desc: 'Çarpışma' }
+                                        ],
+                                        methods: [
+                                            { name: 'SetCapsuleSize', desc: 'Yarıçap ve yüksekliği ayarlar' },
+                                            { name: 'GetScaledCapsuleRadius', desc: 'Ölçekli yarıçap' }
+                                        ],
+                                        blueprintNotes: 'Character\'da varsayılan root component. Add Component > Capsule Collision.',
+                                        examples: [],
+                                        children: []
+                                    },
+                                    {
+                                        id: 'UBoxComponent',
+                                        name: 'UBoxComponent',
+                                        color: '#00BCD4',
+                                        icon: '📦',
+                                        badge: 'Component',
+                                        description: 'Kutu şeklinde çarpışma veya trigger.',
+                                        properties: [
+                                            { name: 'BoxExtent', type: 'FVector', desc: 'Yarı boyutlar (X,Y,Z)' }
+                                        ],
+                                        events: [
+                                            { name: 'BeginOverlap', desc: 'Overlap' },
+                                            { name: 'EndOverlap', desc: 'Overlap sonu' }
+                                        ],
+                                        methods: [
+                                            { name: 'SetBoxExtent', desc: 'Boyutu ayarlar' },
+                                            { name: 'GetScaledBoxExtent', desc: 'Ölçekli boyut' }
+                                        ],
+                                        blueprintNotes: 'Add Component > Box Collision. Trigger Box ve hitbox.',
+                                        examples: [],
+                                        children: []
+                                    },
+                                    {
+                                        id: 'USphereComponent',
+                                        name: 'USphereComponent',
+                                        color: '#00BCD4',
+                                        icon: '⚪',
+                                        badge: 'Component',
+                                        description: 'Küre şeklinde çarpışma veya trigger.',
+                                        properties: [
+                                            { name: 'SphereRadius', type: 'float', desc: 'Yarıçap' }
+                                        ],
+                                        events: [
+                                            { name: 'BeginOverlap', desc: 'Overlap' },
+                                            { name: 'Hit', desc: 'Çarpışma' }
+                                        ],
+                                        methods: [
+                                            { name: 'SetSphereRadius', desc: 'Yarıçapı ayarlar' },
+                                            { name: 'GetScaledSphereRadius', desc: 'Ölçekli yarıçap' }
+                                        ],
+                                        blueprintNotes: 'Add Component > Sphere Collision. Toplama alanı, algılama.',
+                                        examples: [],
+                                        children: []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: 'UCameraComponent',
+                        name: 'UCameraComponent',
+                        color: '#00BCD4',
+                        icon: '📷',
+                        badge: 'Component',
+                        description: 'Görüntüyü bu bileşenin konumundan render eder. Bir kamera görüşü tanımlar.',
+                        properties: [
+                            { name: 'FieldOfView', type: 'float', desc: 'Görüş açısı (derece)' },
+                            { name: 'AspectRatio', type: 'float', desc: 'En-boy oranı' },
+                            { name: 'bUsePawnControlRotation', type: 'bool', desc: 'Pawn rotasyonunu takip etsin mi' }
+                        ],
+                        events: [
+                            { name: 'OnActivated', desc: 'Kamera aktif olduğunda' }
+                        ],
+                        methods: [
+                            { name: 'SetFieldOfView', desc: 'FOV ayarlar' },
+                            { name: 'SetActive', desc: 'Bu kamerayı aktif yapar' },
+                            { name: 'GetCameraView', desc: 'Görüş bilgisi döndürür' }
+                        ],
+                        blueprintNotes: 'Add Component > Camera. Character veya Actor\'a kamera ekleyin.',
+                        examples: [],
+                        children: []
+                    },
+                    {
+                        id: 'USpringArmComponent',
+                        name: 'USpringArmComponent',
+                        color: '#00BCD4',
+                        icon: '📏',
+                        badge: 'Component',
+                        description: 'Kamerayı bir mesafede tutar, çarpışmada geri çeker (spring arm).',
+                        properties: [
+                            { name: 'TargetArmLength', type: 'float', desc: 'Kamera mesafesi' },
+                            { name: 'bDoCollisionTest', type: 'bool', desc: 'Duvar testi yapsın mı' },
+                            { name: 'SocketOffset', type: 'FVector', desc: 'Soket ofseti' }
+                        ],
+                        events: [
+                            { name: 'BeginPlay', desc: 'Başlangıç' }
+                        ],
+                        methods: [
+                            { name: 'SetTargetArmLength', desc: 'Mesafeyi ayarlar' },
+                            { name: 'GetSocketLocation', desc: 'Kamera soket konumunu döndürür' }
+                        ],
+                        blueprintNotes: 'Third Person şablonunda kullanılır. Camera\'yı Spring Arm\'ın child\'ı yapın.',
+                        examples: [],
+                        children: []
+                    },
+                    {
+                        id: 'UAudioComponent',
+                        name: 'UAudioComponent',
+                        color: '#00BCD4',
+                        icon: '🔊',
+                        badge: 'Component',
+                        description: '3D veya 2D ses çalar. Konuma bağlı ses için kullanılır.',
+                        properties: [
+                            { name: 'Sound', type: 'USoundBase', desc: 'Çalınacak ses' },
+                            { name: 'VolumeMultiplier', type: 'float', desc: 'Ses şiddeti çarpanı' },
+                            { name: 'bIsUISound', type: 'bool', desc: 'UI sesi (2D) mi' }
+                        ],
+                        events: [
+                            { name: 'OnAudioFinished', desc: 'Ses bittiğinde' }
+                        ],
+                        methods: [
+                            { name: 'Play', desc: 'Sesi çalar' },
+                            { name: 'Stop', desc: 'Sesi durdurur' },
+                            { name: 'SetSound', desc: 'Ses atar' }
+                        ],
+                        blueprintNotes: 'Add Component > Audio. Sesleri aktöre bağlayın.',
+                        examples: [],
+                        children: []
+                    },
+                    {
+                        id: 'UArrowComponent',
+                        name: 'UArrowComponent',
+                        color: '#00BCD4',
+                        icon: '➡️',
+                        badge: 'Component',
+                        description: 'Yön göstermek için editörde ok çizer. Gizmo olarak kullanılır.',
+                        properties: [
+                            { name: 'ArrowColor', type: 'FColor', desc: 'Ok rengi' },
+                            { name: 'ArrowSize', type: 'float', desc: 'Ok boyutu' }
+                        ],
+                        events: [],
+                        methods: [
+                            { name: 'SetArrowColor', desc: 'Rengi ayarlar' },
+                            { name: 'GetForwardVector', desc: 'İleri yönü döndürür' }
+                        ],
+                        blueprintNotes: 'Add Component > Arrow. Yön ve soket göstermek için.',
+                        examples: [],
+                        children: []
+                    },
+                    {
+                        id: 'UNiagaraComponent',
+                        name: 'UNiagaraComponent',
+                        color: '#00BCD4',
+                        icon: '✨',
+                        badge: 'Component',
+                        description: 'Niagara particle sistemini oynatan bileşen.',
+                        properties: [
+                            { name: 'Asset', type: 'UNiagaraSystem', desc: 'Niagara sistemi' },
+                            { name: 'AutoActivate', type: 'bool', desc: 'Başlarken otomatik oynat' }
+                        ],
+                        events: [
+                            { name: 'OnSystemFinished', desc: 'Sistem bittiğinde' }
+                        ],
+                        methods: [
+                            { name: 'Activate', desc: 'Sistemi başlatır' },
+                            { name: 'Deactivate', desc: 'Sistemi durdurur' },
+                            { name: 'SetAsset', desc: 'Niagara asset atar' }
+                        ],
+                        blueprintNotes: 'Add Component > Niagara Particle System. VFX için.',
+                        examples: [],
+                        children: []
+                    },
+                    {
+                        id: 'UWidgetComponent',
+                        name: 'UWidgetComponent',
+                        color: '#00BCD4',
+                        icon: '🖥️',
+                        badge: 'Component',
+                        description: '3D dünyada UI widget (UMG) gösterir. Can barı, etiket vb.',
+                        properties: [
+                            { name: 'Widget', type: 'UUserWidget', desc: 'Görüntülenecek widget sınıfı' },
+                            { name: 'DrawSize', type: 'FVector2D', desc: 'Çizim boyutu' },
+                            { name: 'Space', type: 'EWidgetSpace', desc: 'World/Screen' }
+                        ],
+                        events: [
+                            { name: 'BeginPlay', desc: 'Başlangıç' }
+                        ],
+                        methods: [
+                            { name: 'SetWidget', desc: 'Widget atar' },
+                            { name: 'GetWidget', desc: 'Widget döndürür' },
+                            { name: 'SetDrawSize', desc: 'Boyutu ayarlar' }
+                        ],
+                        blueprintNotes: 'Add Component > Widget. 3D can barı ve etiketler.',
+                        examples: [],
+                        children: []
+                    }
+                ]
+            },
+            {
+                id: 'UCharacterMovementComponent',
+                name: 'UCharacterMovementComponent',
+                color: '#00BCD4',
+                icon: '🏃',
+                badge: 'Component',
+                description: 'Character için yürüme, zıplama, yüzme, merdiven ve ağ senkronizasyonu.',
+                properties: [
+                    { name: 'MaxWalkSpeed', type: 'float', desc: 'Maksimum yürüme hızı' },
+                    { name: 'JumpZVelocity', type: 'float', desc: 'Zıplama hızı' },
+                    { name: 'GravityZ', type: 'float', desc: 'Yerçekimi' }
+                ],
+                events: [
+                    { name: 'OnMovementModeChanged', desc: 'Hareket modu değiştiğinde' }
+                ],
+                methods: [
+                    { name: 'AddMovementInput', desc: 'Hareket girişi ekler' },
+                    { name: 'Jump', desc: 'Zıplama başlatır' },
+                    { name: 'SetMaxWalkSpeed', desc: 'Yürüme hızını ayarlar' }
+                ],
+                blueprintNotes: 'Character\'da varsayılan olarak var. Blueprint\'te Get Character Movement ile erişin.',
+                examples: [],
+                children: []
+            },
+            {
+                id: 'UProjectileMovementComponent',
+                name: 'UProjectileMovementComponent',
+                color: '#00BCD4',
+                icon: '🚀',
+                badge: 'Component',
+                description: 'Mermi veya fırlatılan objeler için hareket. İlk hız ve yerçekimi.',
+                properties: [
+                    { name: 'InitialSpeed', type: 'float', desc: 'Başlangıç hızı' },
+                    { name: 'MaxSpeed', type: 'float', desc: 'Maksimum hız' },
+                    { name: 'bShouldBounce', type: 'bool', desc: 'Sekme açık mı' }
+                ],
+                events: [
+                    { name: 'OnProjectileBounce', desc: 'Sekme anında' },
+                    { name: 'OnProjectileStop', desc: 'Durduğunda' }
+                ],
+                methods: [
+                    { name: 'SetVelocityInLocalSpace', desc: 'Yerel hız atar' },
+                    { name: 'Activate', desc: 'Hareketi başlatır' }
+                ],
+                blueprintNotes: 'Add Component > Projectile Movement. Mermi ve fırlatılan objelere ekleyin.',
+                examples: [],
+                children: []
+            },
+            {
+                id: 'UInputComponent',
+                name: 'UInputComponent',
+                color: '#00BCD4',
+                icon: '⌨️',
+                badge: 'Component',
+                description: 'Input (tuş, axis) bağlamalarını tutar. PlayerController ve Pawn\'da kullanılır.',
+                properties: [
+                    { name: 'ActionBindings', type: 'TArray<FInputActionBinding>', desc: 'Action bağlamaları' },
+                    { name: 'AxisBindings', type: 'TArray<FInputAxisBinding>', desc: 'Axis bağlamaları' }
+                ],
+                events: [],
+                methods: [
+                    { name: 'BindAction', desc: 'Action (tuş) bağlar' },
+                    { name: 'BindAxis', desc: 'Axis bağlar' },
+                    { name: 'RemoveActionBinding', desc: 'Bağlamayı kaldırır' }
+                ],
+                blueprintNotes: 'PlayerController/Pawn\'da SetupInputComponent içinde Input bağlayın. Blueprint\'te Input node\'ları kullanın.',
+                examples: [],
                 children: []
             }
         ]
