@@ -128,27 +128,6 @@ npm run preview
 - Editor Scripting, Python, Blutility
 - Platform Deploy (Windows, Android, iOS, Steam, Epic Store)
 
----
-
-## Proje Yapisi
-
-```
-unreal-rehber/
-├── index.html               # Ana HTML sayfasi
-├── package.json             # Node.js bagimliliklari
-├── vite.config.js           # Vite yapilandirmasi
-├── start_server.bat         # Windows hizli baslatma scripti
-├── .gitignore               # Git ignore kurallari
-├── README.md                # Bu dosya
-└── src/
-    ├── main.js              # Uygulama giris noktasi
-    ├── style.css            # Tum stiller (28 KB)
-    ├── data.js              # Actor (52 node), degisken, node, kisayol verileri (164 KB)
-    ├── guideData.js         # 486 rehber + blueprint semalari (1.2 MB)
-    └── components/
-        ├── Sidebar.js       # Sol navigasyon paneli
-        └── ContentArea.js   # Icerik render motoru (31 KB)
-```
 
 > `node_modules/` ve `dist/` klasorleri `.gitignore` ile haric tutulmustur. `npm install` komutu ile otomatik olusturulur.
 
@@ -199,3 +178,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
