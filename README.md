@@ -75,8 +75,8 @@ Opsiyonel fakat tavsiye edilen:
 ### 1) Repoyu klonla
 
 ```bash
-git clone https://github.com/KULLANICI_ADI/unreal-rehber.git
-cd unreal-rehber
+git clone https://github.com/00printrandom11/unreal-unity-rehber
+cd unreal-unity-rehber
 ```
 
 ### 2) Bagimliliklari kur
